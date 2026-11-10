@@ -1,0 +1,19 @@
+.botaoVerde {
+  background-color: #1ed760;
+  color: #000000;
+  font-weight: 700;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.botaoVerde:hover {
+  background-color: #1fdf64;
+  transform: scale(1.05);
+}
+
+.botaoVerde:active {
+  transform: scale(0.95);
+}
