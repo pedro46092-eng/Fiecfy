@@ -1,16 +1,23 @@
  import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Player from './components/Player';
-import RecentGrid from './components/RecentGrid';
-import ListaGenero from './components/ListaGenero';
-import PlaylistGrid from './Components/PlaylistGrid';
+// Componentes de Layout
+import Header from './components/layout/Header';
+import Sidebar from './components/layout/Sidebar';
+
+// Componente do Player
+import Player from './components/Player/Player';
+
+// Componentes de Playlists
+import RecentGrid from './components/Playlists/RecentGrid';
+import ListaGenero from './components/Playlists/ListaGenero';
+import PlaylistGrid from './components/Playlists/PlaylistGrid';
+
+// Páginas e Contexto (ajustado para as tuas pastas 'Pages' e 'Context')
 import Login from './Pages/Login'; 
-import { PlayerProvider } from './Context/PlayerContext';
+import { PlayerProvider } from './Context/PlayerContext.jsx';
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem('token');
@@ -20,6 +27,24 @@ function ProtectedRoute({ children }) {
   }
   
   return children;
+}
+
+function LogoutButtonInline() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  return (
+    <button 
+      onClick={handleLogout}
+      className="bg-white text-black text-xs font-bold px-4 py-2 rounded-full hover:scale-105 transition cursor-pointer"
+    >
+      Sair
+    </button>
+  );
 }
 
 function Home() {
@@ -33,7 +58,11 @@ function Home() {
         </aside>
 
         <main className="flex-1 bg-zinc-900 rounded-lg overflow-y-auto flex flex-col">
-          <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Header 
+            searchTerm={searchTerm} 
+            setSearchTerm={setSearchTerm} 
+            rightAction={<LogoutButtonInline />} 
+          />
 
           <div className="p-6 flex flex-col gap-8 pb-24">
             <section>
